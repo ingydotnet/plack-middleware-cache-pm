@@ -1,4 +1,10 @@
 ---
+version: 0.11
+date:    Thu Mar 24 13:48:11 CST 2011
+changes:
+- Add debug option
+- Refactoring
+---
 version: 0.10
 date:    Wed Mar 23 00:43:44 CST 2011
 changes:

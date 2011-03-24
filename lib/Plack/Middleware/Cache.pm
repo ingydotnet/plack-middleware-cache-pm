@@ -4,21 +4,21 @@ use strict;
 use warnings;
 use parent 'Plack::Middleware';
 use Plack::Util;
-use Plack::Util::Accessor qw(match_url cache_dir);
+use Plack::Util::Accessor qw(match_url cache_dir debug);
 
 use Digest::MD5 qw(md5_hex);
 use Storable qw(nstore retrieve);
 use File::Path qw(make_path);;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 sub call {
     my ($self, $env) = @_;
     my $match_url = $self->match_url or return;
     $match_url = [ $match_url ] unless ref $match_url;
-    my $request = $env->{REQUEST_URI};
+    my $request_uri = $env->{REQUEST_URI};
     for my $regexp (@$match_url) {
-        if ($request =~ /$regexp/) {
+        if ($request_uri =~ /$regexp/) {
             return $self->cache_response($env);
         }
     }
@@ -28,8 +28,12 @@ sub call {
 sub cache_response {
     my ($self, $env) = @_;
     my $dir = $self->cache_dir || 'cache';
-    my $file = "$dir/" . md5_hex($env->{REQUEST_URI});
+    my $request_uri = $env->{REQUEST_URI};
+    my $digest = md5_hex($request_uri);
+    my $file = "$dir/$digest";
     if (-e $file) {
+        warn "Plack::Middleware::Cache found: $request_uri - $digest"
+            if $self->debug;
         my $cache = retrieve($file) or die;
         my $request = Plack::Request->new($env);
         my $response = $request->new_response($cache->[0]);
@@ -37,6 +41,8 @@ sub cache_response {
         $response->body($cache->[2]);
         return $response->finalize;
     }
+    warn "Plack::Middleware::Cache fetch: $request_uri - $digest"
+        if $self->debug;
     return Plack::Util::response_cb(
         $self->app->($env),
         sub {
@@ -97,6 +103,10 @@ A directory to write the cached responses.
 
 Thanks to Strategic Data for supporting the writing and release of
 this module.
+
+=item debug (optional)
+
+Set to 1 to warn cache information.
 
 =back
 

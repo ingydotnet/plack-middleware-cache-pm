@@ -29,6 +29,9 @@ PARAMETERS
         Thanks to Strategic Data for supporting the writing and release of
         this module.
 
+    debug (optional)
+        Set to 1 to warn cache information.
+
 AUTHOR
     Ingy döt Net <ingy@cpan.org>
 
