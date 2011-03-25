@@ -1,3 +1,3 @@
 use Test::More tests => 1;
 
-use_ok 'Plack::Middleware::ProxyMap';
+use_ok 'Plack::Middleware::Cache';

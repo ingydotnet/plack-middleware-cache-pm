@@ -10,7 +10,7 @@ use Digest::MD5 qw(md5_hex);
 use Storable qw(nstore retrieve);
 use File::Path qw(make_path);;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 sub call {
     my ($self, $env) = @_;
