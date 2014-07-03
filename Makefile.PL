@@ -12,6 +12,6 @@ requires 'Plack::Util::Accessor';
 requires 'Plack::Middleware';
 requires 'Digest::MD5';
 requires 'Storable';
-requires 'File::Path';
+requires 'File::Path' => '2.07';
 
 WriteAll;
