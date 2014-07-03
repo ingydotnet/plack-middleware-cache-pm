@@ -1,16 +1,15 @@
+use strict; use warnings;
 package Plack::Middleware::Cache;
-use 5.008003;
-use strict;
-use warnings;
+our $VERSION = '0.13';
+
 use parent 'Plack::Middleware';
+
 use Plack::Util;
 use Plack::Util::Accessor qw(match_url cache_dir debug);
 
 use Digest::MD5 qw(md5_hex);
 use Storable qw(nstore retrieve);
 use File::Path qw(make_path);;
-
-our $VERSION = '0.12';
 
 sub call {
     my ($self, $env) = @_;
@@ -62,65 +61,3 @@ sub cache_response {
 }
 
 1;
-
-=encoding utf8
-
-=head1 NAME
-
-Plack::Middleware::Cache - Use Cached Responses of Certain URIs
-
-=head1 SYNOPSIS
-
-    builder {
-        enable "Cache",
-            match_url => [
-                '^/foo/',
-                '\\?.*xxx=.*',
-            ],
-            cache_dir => '/tmp/plack-cache';
-        $app;
-    };
-
-=head1 DESCRIPTION
-
-This middleware allows you to cache expensive and non-changing responses
-from URIs that match a list of regular expression patterns.
-
-=head1 PARAMETERS
-
-The following parameters can be used:
-
-=over
-
-=item match_url (required)
-
-A regexp string or array ref of regexp strings to try to match the
-current URL against.
-
-=item cache_dir (optional)
-
-A directory to write the cached responses.
-
-Thanks to Strategic Data for supporting the writing and release of
-this module.
-
-=item debug (optional)
-
-Set to 1 to warn cache information.
-
-=back
-
-=head1 AUTHOR
-
-Ingy döt Net <ingy@cpan.org>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright (c) 2011. Ingy döt Net.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
-See http://www.perl.com/perl/misc/Artistic.html
-
-=cut

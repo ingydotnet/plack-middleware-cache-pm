@@ -1,0 +1,31 @@
+=meta: 0.0.1
+
+name: Plack-Middleware-Cache
+version: 0.13
+abstract: Use Cached Responses of Certain URIs
+homepage: https://metacpan.org/release/Plack-Middleware-Cache
+
+license: perl
+copyright: 2011-2014. Ingy döt Net.
+author:
+  name: Ingy döt Net
+  email: ingy@cpan.org
+  github: ingydotnet
+  twitter: ingydotnet
+  freenode: ingy
+  homepage: http://ingy.net
+
+requires:
+  perl: 5.8.1
+  Plack::Middleware: 0
+  Plack::Util: 0
+  Plack::Util::Accessor: 0
+  Plack::Middleware: 0
+  File::Path: 2.07
+
+devel:
+  git: git@github.org/ingydotnet/plack-middleware-cache-pm
+  irc: irc.freenode.net#ingy
+  bug: https://github.com/ingydotnet/plack-middleware-cache-pm/issues/
+
+=travis: perl

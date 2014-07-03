@@ -1,0 +1,58 @@
+Plack::Middleware::Cache
+========================
+
+Use Cached Responses of Certain URIs
+
+<badge travis coveralls ingydotnet/plack-middleware-cache-pm>
+
+= Synopsis
+
+  builder {
+      enable "Cache",
+          match_url => [
+              '^/foo/',
+              '\\?.*xxx=.*',
+          ],
+          cache_dir => '/tmp/plack-cache';
+      $app;
+  };
+
+= Description
+
+This middleware allows you to cache expensive and non-changing responses from
+URIs that match a list of regular expression patterns.
+
+= Parameters
+
+The following parameters can be used:
+
+- match_url (required)
+
+  A regexp string or array ref of regexp strings to try to match the current
+  URL against.
+
+- cache_dir (optional)
+
+  A directory to write the cached responses.
+
+- debug (optional)
+
+  Set to 1 to warn cache information.
+
+= Thanks
+
+Thanks to Strategic Data for supporting the writing and release of this
+module.
+
+= Author
+
+Ingy döt Net <ingy@cpan.org>
+
+= Copyright and License
+
+Copyright (c) 2011-2014. Ingy döt Net.
+
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+See http://www.perl.com/perl/misc/Artistic.html
