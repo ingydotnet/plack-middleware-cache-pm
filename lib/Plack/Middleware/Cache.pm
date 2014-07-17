@@ -1,6 +1,6 @@
 use strict; use warnings;
 package Plack::Middleware::Cache;
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 use parent 'Plack::Middleware';
 
