@@ -1,7 +1,7 @@
 =meta: 0.0.1
 
 name: Plack-Middleware-Cache
-version: 0.14
+version: 0.15
 abstract: Use Cached Responses of Certain URIs
 homepage: https://metacpan.org/release/Plack-Middleware-Cache
 
@@ -25,6 +25,8 @@ requires:
 devel:
   git: https://github.com/ingydotnet/plack-middleware-cache-pm
   bug: https://github.com/ingydotnet/plack-middleware-cache-pm/issues
-  irc: irc.freenode.net#ingy
+  irc: irc.freenode.net#pkg
 
-=travis: perl
+=travis:
+  type: perl
+  irc: irc.freenode.net#pkg
