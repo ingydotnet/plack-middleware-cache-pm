@@ -1,7 +1,7 @@
 =meta: 0.0.1
 
 name: Plack-Middleware-Cache
-version: 0.17
+version: 0.18
 abstract: Use Cached Responses of Certain URIs
 homepage: https://metacpan.org/release/Plack-Middleware-Cache
 
