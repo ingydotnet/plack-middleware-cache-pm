@@ -6,6 +6,7 @@ use parent 'Plack::Middleware';
 
 use Plack::Util;
 use Plack::Util::Accessor qw(match_url cache_dir debug);
+use Plack::Request;
 
 use Digest::MD5 qw(md5_hex);
 use Storable qw(nstore retrieve);
