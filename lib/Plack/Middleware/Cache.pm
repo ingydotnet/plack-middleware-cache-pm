@@ -52,8 +52,6 @@ sub cache_response {
                     nstore $cache, $file;
                     return;
                 }
-                $cache->[2] ||= '';
-                $cache->[2] .= $_[0];
                 return $_[0];
             }
         }
