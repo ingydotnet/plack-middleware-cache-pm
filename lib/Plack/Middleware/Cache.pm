@@ -5,12 +5,13 @@ our $VERSION = '0.19';
 use parent 'Plack::Middleware';
 
 use Plack::Util;
-use Plack::Util::Accessor qw(match_url cache_dir debug);
+use Plack::Util::Accessor qw(match_url status cache_dir debug);
 use Plack::Request;
 
 use Digest::MD5 qw(md5_hex);
 use Storable qw(nstore retrieve);
-use File::Path qw(make_path);;
+use File::Path qw(make_path);
+use List::Util 1.33 qw(none pairgrep);
 
 sub call {
     my ($self, $env) = @_;
@@ -28,6 +29,8 @@ sub call {
 sub cache_response {
     my ($self, $env) = @_;
     my $dir = $self->cache_dir || 'cache';
+    my $status = $self->status;
+    $status = [ $status ] if ( $status && !ref $status );
     my $request_uri = $env->{REQUEST_URI};
     my $digest = md5_hex($request_uri);
     my $file = "$dir/$digest";
@@ -38,6 +41,7 @@ sub cache_response {
         my $request = Plack::Request->new($env);
         my $response = $request->new_response($cache->[0]);
         $response->headers($cache->[1]);
+        $response->headers->remove_header('Set-Cookie');
         $response->body($cache->[2]);
         return $response->finalize;
     }
@@ -46,11 +50,19 @@ sub cache_response {
     return Plack::Util::response_cb(
         $self->app->($env),
         sub {
-            my $cache = shift;
+            my $res = shift;
             make_path($dir) unless -d $dir;
             return sub {
                 if (not defined $_[0]) {
-                    nstore $cache, $file;
+                    if ( $status ) {
+                        my $res_status = $res->[0];
+                        return if ( none { $res_status == $_ } @$status );
+                    }
+                    # Remove Set-Cookie header
+                    if ( @{ $res->[1] } ) {
+                        @{ $res->[1] } = pairgrep { $a =~ /^set[_-]cookie$/i } @{ $res->[1] };
+                    }
+                    nstore $res, $file;
                     return;
                 }
                 return $_[0];
