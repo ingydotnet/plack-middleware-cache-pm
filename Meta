@@ -27,3 +27,4 @@ requires:
   Plack::Util: 0
   Plack::Util::Accessor: 0
   File::Path: 2.07
+  List::Util: 1.33
